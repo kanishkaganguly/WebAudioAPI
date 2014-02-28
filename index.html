@@ -1,168 +1,34 @@
 <html>
 <head>
 	<script src = "scripts/jquery-1.9.0.js"></script>
-	<style>
-	#progress_bar {
-		margin: 10px 0;
-		padding: 3px;
-		border: 1px solid #000;
-		font-size: 14px;
-		clear: both;
-		opacity: 0;
-		-moz-transition: opacity 1s linear;
-		-o-transition: opacity 1s linear;
-		-webkit-transition: opacity 1s linear;
-	}
-	#progress_bar.loading {
-		opacity: 1.0;
-	}
-	#progress_bar .percent {
-		background-color: #99ccff;
-		height: auto;
-		width: 0;
-	}
-	</style>
-
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
 </head>
 
 <body>
-	<input type="file" name="files[]"id="input" multiple> 
-	<audio id = "audio" canplay = "song_loaded()" error = "error()" stalled = "error()"> <!--  onloadeddata = "song_loaded()" -->
-		<source id = "mp3source" src = "" type="audio/mpeg" />
-		Your browser does not support HTML5 audio. Please consider upgrading.
-	</audio>
-	<button id="startBtn">START</button>
-	<button id="playBtn">PLAY</button>
-	<button id="nextBtn">NEXT</button>
-	<button id="prevBtn">PREV</button>
-	<button id="clearBtn">CLEAR</button>
-
-	<br>0<input type="range" id="vol" min="0" max="100">100
-	<br><label for="vol">VOLUME</label>
+	<center>
+		<input type="file" name="files[]"id="input" multiple> 
+		<audio id = "audio" canplay = "song_loaded()" onloadeddata = "song_loaded()"> <!--  onloadeddata = "song_loaded()" -->
+			<source id = "mp3source" src = "" type="audio/mpeg" />
+			Your browser does not support HTML5 audio. Please consider upgrading.
+		</audio>
+		<button class="buttons" id="startBtn">UPDATE PLAYLIST</button>
+		<button class="buttons" id="playBtn">PLAY</button>
+		<button class="buttons" id="nextBtn">NEXT</button>
+		<button class="buttons" id="prevBtn">PREV</button>
+		<button class="buttons" id="clearBtn">CLEAR</button>
+	</center>
 	<br><br>
-	<div id="progress_bar"><div class="percent">0%</div></div>
-	<h2>PLAYLIST</h2>
-	<ol id = "play_list"> </ul>
-		<script>
-		var progress = document.querySelector('.percent');
-		var playlist = new Array();
-		var audioplayer = document.getElementById("audio");
-		var song_counter = 0;
-
-		function song_loaded(){
-			alert("LOADED");
-			audioplayer.play();
-		}
-
-		function error(){
-			alert("ERROR");
-		}
-
-		function volchange() {
-			var audio = $("#audio");
-			audioplayer.volume = (document.getElementById('vol').value / 100);
-		}
-
-		$("#clearBtn").click(function(){
-			var audio = $("#audio");
-			audio[0].pause();
-			song_counter = 0;
-		});	
-
-		$("#nextBtn").click(function(){
-			song_counter++;
-			var audio = $("#audio");
-			console.log(playlist[song_counter]);
-			$("#mp3source").attr("src", playlist[song_counter]);
-			audio[0].pause();
-			audio[0].load();	
-			//audio[0].play();
-		});	
-
-		$("#prevBtn").click(function(){
-			song_counter--;
-			var audio = $("#audio");
-			console.log(playlist[song_counter]);
-			$("#mp3source").attr("src", playlist[song_counter]);
-			audio[0].pause();
-			audio[0].load();
-			//audio[0].play();
-		});	
-
-		$("#startBtn").click(function(){
-			var audio = $("#audio");
-			console.log(playlist[song_counter]);
-			audioplayer.volume = 0.5;
-			$("#mp3source").attr("src", playlist[song_counter]);
-			audio[0].pause();
-			audio[0].load();
-			alert("LOADING");
-		});	
-
-		$("#playBtn").click(function(){
-			if (audioplayer.paused) {
-				audioplayer.play();
-				$("#playBtn").html('PAUSE');
-			}   
-			else {
-				audioplayer.pause();
-				$("#playBtn").html('PLAY');
-			}
-		});
-
-		function errorHandler(evt) {
-			switch(evt.target.error.code) {
-				case evt.target.error.NOT_FOUND_ERR:
-				alert('File Not Found!');
-				break;
-				case evt.target.error.NOT_READABLE_ERR:
-				alert('File is not readable');
-				break;
-				case evt.target.error.ABORT_ERR:
-        break;
-        default:
-        alert('An error occurred reading this file.');
-    };
-}
-function updateProgress(evt) {
-    // evt is an ProgressEvent.
-    if (evt.lengthComputable) {
-    	var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
-      // Increase the progress bar length.
-      if (percentLoaded < 100) {
-      	progress.style.width = percentLoaded + '%';
-      	progress.textContent = percentLoaded + '%';
-      }
-  }
-}
-function handleFileSelect(evt) {
-	var files = evt.target.files;
-	for(var i=0,f;f=files[i];i++){
-		var reader = new FileReader();
-		reader.onerror = errorHandler;
-		reader.onprogress = updateProgress;
-		playlist[i] = f;		
-		var playList = document.getElementById('play_list');
-		reader.onloadstart = function(e) {
-			document.getElementById('progress_bar').className = 'loading';
-		};
-		reader.onload = (function(theFile) {
-			return function(e) {
-				progress.style.width = '100%';
-				progress.textContent = '100%';
-				playlist[i] = e.target.result;
-				var newLI = document.createElement("li");
-				var newContent = document.createTextNode(theFile.name);
-				newLI.appendChild(newContent);
-				playList.appendChild(newLI);
-			};
-		})(f);
-		reader.readAsDataURL(f);
-	}
-}
-document.getElementById('input').addEventListener('change', handleFileSelect, false);
-document.getElementById("vol").addEventListener('change',volchange,false);
-</script>
-</body>
-</html>
+	<div id="slider">
+		<input class="bar" type="range" id="rangeinput" min = "0" max = "100" value="50"/>
+		<span class ="highlight"></span>
+		<output id="rangevalue">50</output>
+	</div>
+	<center><span id = "playing"></span></center>
+	<center>
+		<h2><u>PLAYLIST</u></h2>
+		<ol id = "play_list"> </ul>
+		</center>
+		<script src = "scripts/player.js"></script>
+	</body>
+	</html>
 

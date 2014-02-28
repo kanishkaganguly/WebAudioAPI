@@ -4,7 +4,7 @@
   <title>Playlist Audio Player</title>
 </head>
 <body>
-  <input type="file" accept="audio/*" multiple>
+  <input id = "file" type="file" accept="audio/*" multiple>
   <button onclick="playSound()" disabled>Start</button>
   <button onclick="stopSound()" disabled>Stop</button>
   <button onclick="nextSound()" disabled>Next</button>
@@ -16,10 +16,17 @@
   var audioBuffer = null;
   var gainNode = context.createGain();
   var playlist = new Array();
+  var song_counter = 0;
 
   function volchange() {
     gainNode.gain.value = (document.getElementById('vol').value / 100);
     document.getElementById("curr_vol").innerHTML = document.getElementById('vol').value;
+  }
+
+  function nextSound(){
+    song_counter++;
+    initSound(playlist[song_counter]);
+    playSound();
   }
 
   function stopSound() {
@@ -28,18 +35,16 @@
     }
   }
   function playSound() {
-  // source is global so we can call .noteOff() later.
-  source = context.createBufferSource();
-  source.buffer = audioBuffer;
-  source.loop = false;
-  source.connect(gainNode);
-  gainNode.connect(context.destination);
+    source = context.createBufferSource();
+    source.buffer = audioBuffer;
+    source.loop = false;
+    source.connect(gainNode);
+    gainNode.connect(context.destination);
   source.noteOn(0); // Play immediately.
 }
 
 function initSound(arrayBuffer) {
   context.decodeAudioData(arrayBuffer, function(buffer) {
-    // audioBuffer is global to reuse the decoded audio later.
     audioBuffer = buffer;
     var buttons = document.querySelectorAll('button');
     buttons[0].disabled = false;
@@ -51,15 +56,30 @@ function initSound(arrayBuffer) {
   }); 
 }
 
-function load_files(evt){
+/*function load_files(){
   var reader = new FileReader();
   reader.onload = function(e) {
-    initSound(this.result);
+    playlist[0] = this.result;
+    initSound(playlist[0]);
   };
   reader.readAsArrayBuffer(this.files[0]);
+}*/
+function load_files(){
+  var files = document.getElementById('file').files;
+  var k = files.length;
+  for (var i = 0; i < k; i++) {
+   var reader = new FileReader();
+   reader.onload = function(e) {
+    playlist[i] = this.result;  
+  };
+  reader.readAsArrayBuffer(this.files[i]);
+  alert(song_counter); 
+  initSound(playlist[song_counter]);
+}
 }
 
-// User selects file, read it as an ArrayBuffer and pass to the API.
+// User selects file, read it as an ArrayBuffer and pass to the API
+
 var fileInput = document.querySelector('input[type="file"]');
 fileInput.addEventListener('change', load_files, false);
 
