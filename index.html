@@ -5,29 +5,55 @@
 </head>
 
 <body>
+	<br><br><br><br>
 	<center>
-		<input type="file" name="files[]"id="input" multiple> 
-		<audio id = "audio" canplay = "song_loaded()" onloadeddata = "song_loaded()"> <!--  onloadeddata = "song_loaded()" -->
+		<h2>HTML5 Offline Music Player</h2>
+		<table>
+			<tr>
+				<td colspan="2">
+					<span id = "playing"></span>
+				</td>
+				<td>Duration <span id = "time"></span></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div id="slider">
+						<input class="bar" type="range" id="rangeinput" min = "0" max = "100" value="50"/>
+						<span class ="highlight"></span>
+						<output id="rangevalue">50</output>
+					</div>
+				</td>
+				<td colspan="2">
+					<div id="seekslider">
+						<input class="seekbar" type="range" id="seekrangeinput" min = "0" max = "100" value="0"/>
+						<span class ="seekhighlight"></span>
+						<output id="seekrangevalue">0</output>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><button class="buttons" id="startBtn">UPDATE PLAYLIST</button></td>
+				<td><button class="buttons" id="playBtn">PLAY</button></td>
+				<td><button class="buttons" id="nextBtn">NEXT</button></td>
+				<td><button class="buttons" id="prevBtn">PREV</button></td>
+			</tr>
+			<tr>
+				<td><input type="file" name="files[]"id="input" multiple accept="audio/*"> </td>
+				<td><button class="buttons" id="clearBtn">CLEAR</button></td>
+			</tr>
+			<tr>
+				<td>
+					<a href="#" id = "playlistToggle" class="playlist_toggle">PLAYLIST</a>
+					<br><br>
+					<ol id = "play_list"> </ul>
+				</td>
+			</tr>
+		</table>
+		
+		<audio id = "audio" canplay = "song_loaded()" onloadeddata = "song_loaded()">
 			<source id = "mp3source" src = "" type="audio/mpeg" />
 			Your browser does not support HTML5 audio. Please consider upgrading.
 		</audio>
-		<button class="buttons" id="startBtn">UPDATE PLAYLIST</button>
-		<button class="buttons" id="playBtn">PLAY</button>
-		<button class="buttons" id="nextBtn">NEXT</button>
-		<button class="buttons" id="prevBtn">PREV</button>
-		<button class="buttons" id="clearBtn">CLEAR</button>
-	</center>
-	<br><br>
-	<div id="slider">
-		<input class="bar" type="range" id="rangeinput" min = "0" max = "100" value="50"/>
-		<span class ="highlight"></span>
-		<output id="rangevalue">50</output>
-	</div>
-	<center><span id = "playing"></span></center>
-	<center>
-		<h2><u>PLAYLIST</u></h2>
-		<ol id = "play_list"> </ul>
-		</center>
 		<script src = "scripts/player.js"></script>
 	</body>
 	</html>
