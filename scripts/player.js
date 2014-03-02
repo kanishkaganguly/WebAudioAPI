@@ -48,15 +48,17 @@
 			}
 			var audio = $("#audio");
 			nowplaying.innerHTML = song_list[song_counter];
+			var myLi = document.getElementById('play_list').getElementsByTagName('li');
 			for(var i=0; i< (myLi.length);i++){
 				myLi[i].style.background="none";
 				myLi[i].style.color="white";
 			}
 			$("li").eq(song_counter).css("background", "white");
 			$("li").eq(song_counter).css("color", "black");
+			$("li").eq(song_counter).get(0).scrollIntoView();
 			$("#mp3source").attr("src", playlist[song_counter]);
 			audio[0].pause();
-			audio[0].load();	
+			audio[0].load();
 		});	
 
 		$("#prevBtn").click(function(){
@@ -67,15 +69,17 @@
 			}
 			var audio = $("#audio");
 			nowplaying.innerHTML = song_list[song_counter];
-			$("#mp3source").attr("src", playlist[song_counter]);
-			audio[0].pause();
-			audio[0].load();
+			var myLi = document.getElementById('play_list').getElementsByTagName('li');
 			for(var i=0; i< (myLi.length);i++){
 				myLi[i].style.background="none";
 				myLi[i].style.color="white";
 			}
 			$("li").eq(song_counter).css("background", "white");
 			$("li").eq(song_counter).css("color", "black");
+			$("li").eq(song_counter).get(0).scrollIntoView();
+			$("#mp3source").attr("src", playlist[song_counter]);
+			audio[0].pause();
+			audio[0].load();
 		});	
 
 		$("#startBtn").click(function(){
@@ -88,6 +92,7 @@
 			audio[0].load();
 			$( "li").eq(song_counter).css("background", "white");
 			$( "li").eq(song_counter).css("color", "black");
+			$("li").eq(song_counter).get(0).scrollIntoView();
 			var myLi = document.getElementById('play_list').getElementsByTagName('li');
 			for(var i=1; i< (myLi.length);i++){
 				myLi[i].addEventListener('click', playlist_clicked, false);
@@ -109,6 +114,7 @@
 			}
 			$("li").eq(song_counter).css("background", "white");
 			$("li").eq(song_counter).css("color", "black");
+			$("li").eq(song_counter).get(0).scrollIntoView();
 			audio[0].pause();
 			audio[0].load();
 		}
@@ -135,10 +141,14 @@
 				song_counter++;
 			}
 			var audio = $("#audio");
-			$( "li").eq(song_counter-1).css("background", "none");
-			$( "li").eq(song_counter-1).css("color", "white");
-			$( "li").eq(song_counter).css("background", "white");
-			$( "li").eq(song_counter).css("color", "black");
+			var myLi = document.getElementById('play_list').getElementsByTagName('li');
+			for(var i=0; i< (myLi.length);i++){
+				myLi[i].style.background="none";
+				myLi[i].style.color="white";
+			}
+			$("li").eq(song_counter).css("background", "white");
+			$("li").eq(song_counter).css("color", "black");
+			$("li").eq(song_counter).get(0).scrollIntoView();
 			nowplaying.innerHTML = song_list[song_counter];
 			$("#mp3source").attr("src", playlist[song_counter]);
 			audio[0].pause();

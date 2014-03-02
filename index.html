@@ -41,15 +41,11 @@
 				<td><input type="file" name="files[]"id="input" multiple accept="audio/*"> </td>
 				<td><button class="buttons" id="clearBtn">CLEAR</button></td>
 			</tr>
-			<tr>
-				<td>
-					<a id = "playlistToggle" class="playlist_toggle">PLAYLIST</a>
+		</table>
+		<br><br>
+		<a id = "playlistToggle" class="playlist_toggle">PLAYLIST</a>
 					<br><br>
 					<ul id = "play_list"> </ul>
-				</td>
-			</tr>
-		</table>
-		
 		<audio id = "audio" canplay = "song_loaded()" onloadeddata = "song_loaded()">
 			<source id = "mp3source" src = "" type="audio/mpeg" />
 			Your browser does not support HTML5 audio. Please consider upgrading.
