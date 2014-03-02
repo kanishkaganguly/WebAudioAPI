@@ -239,7 +239,7 @@ input[type="range"]:hover ~ #seekrangevalue,input[type="range"]:active ~ #seekra
 	top: -95px;
 }
 
-ol {
+ul {
    margin: 0;
    padding: 0 4px;
    border-radius: 2px;
