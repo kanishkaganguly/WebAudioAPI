@@ -10,6 +10,7 @@
 		var prevBtn_DOM = document.getElementById("prevBtn");
 		var muteBtn_DOM = document.getElementById("muteBtn");
 		var clearBtn_DOM = document.getElementById("clearBtn");
+		var shuffleBtn_DOM = document.getElementById("shuffleBtn");
 
 		$( document ).ready(function() {
 			playBtn_DOM.disabled = true;
@@ -36,6 +37,7 @@
 			document.getElementById("seekrangevalue").value = document.getElementById('seekrangeinput').value;
 		}
 
+
 		$("#clearBtn").click(function(){
 			playlist = [];
 			var audio = $("#audio");
@@ -48,10 +50,18 @@
 		});	
 
 		$("#nextBtn").click(function(){
-			if(song_counter == playlist.length - 1){
-				song_counter = 0;
+			if(song_counter == playlist.length-1){
+				if(shuffleBtn_DOM.checked == true){
+					song_counter = randomInt(0, playlist.length-1);
+				}else if(shuffleBtn_DOM.checked == false){
+					song_counter = 0;
+				}
 			}else{
-				song_counter++;
+				if(shuffleBtn_DOM.checked == true){
+					song_counter = randomInt(0, playlist.length-1);
+				}else if(shuffleBtn_DOM.checked == false){
+					song_counter++;
+				}
 			}
 			var audio = $("#audio");
 			nowplaying.innerHTML = song_list[song_counter];
@@ -162,9 +172,17 @@
 
 		function next_song(){
 			if(song_counter == playlist.length-1){
-				song_counter = 0;
+				if(shuffleBtn_DOM.checked == true){
+					song_counter = randomInt(0, playlist.length-1);
+				}else if(shuffleBtn_DOM.checked == false){
+					song_counter = 0;
+				}
 			}else{
-				song_counter++;
+				if(shuffleBtn_DOM.checked == true){
+					song_counter = randomInt(0, playlist.length-1);
+				}else if(shuffleBtn_DOM.checked == false){
+					song_counter++;
+				}
 			}
 			var audio = $("#audio");
 			var myLi = document.getElementById('play_list').getElementsByTagName('li');
@@ -243,3 +261,8 @@
 			$( "#play_list" ).slideToggle( "slow", function() {
 			});
 		});
+
+		function randomInt(min,max)
+		{
+			return Math.floor(Math.random()*(max-(min+1))+(min+1));
+		}
