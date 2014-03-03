@@ -1,8 +1,9 @@
 body {
 	background: #2B353E;
-	margin: 0;
+	margin: 5px;
 	padding: 0;
 	color: #EBEBEB;
+	overflow: hidden;
 }
 
 #slider {
@@ -291,6 +292,27 @@ ul {
 	background:-moz-linear-gradient( center top, #e9e9e9 5%, #f9f9f9 100% );
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9');
 	background-color:#e9e9e9;
-}.playlist_toggle:active {
+
+}
+.playlist_toggle:active {
 	position:relative;
 	top:1px;
+}
+
+#play_list{
+	padding:30px;
+	list-style-type: none;
+}
+
+ul li{
+	margin:0;
+	padding: 5px;
+}
+
+.buttongroup{
+	clear:left;
+}
+
+#gap{
+	padding:10px;
+}

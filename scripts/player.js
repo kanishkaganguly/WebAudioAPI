@@ -1,9 +1,3 @@
-		$(document).ready(function(){
-			$(window).on('load',function(){
-				$('#loading').fadeOut('slow');
-			})
-		});
-
 		var playlist = new Array();
 		var song_list = new Array();
 		var audioplayer = document.getElementById("audio");
@@ -83,6 +77,8 @@
 		});	
 
 		$("#startBtn").click(function(){
+			var h = $(window).height() - $("#play_list").offset().top;
+			$('#play_list').height(h);
 			song_counter = 0;
 			var audio = $("#audio");
 			audioplayer.volume = 0.5;
