@@ -130,6 +130,17 @@
 			}
 		});
 
+		$("#muteBtn").click(function(){
+			if (audioplayer.muted == true) {
+				audioplayer.muted = false;
+				$("#muteBtn").html('MUTE');
+			}   
+			else if (audioplayer.muted == false){
+				audioplayer.muted = true;
+				$("#muteBtn").html('UNMUTE');
+			}
+		});
+
 		function next_song(){
 			if(song_counter == playlist.length-1){
 				song_counter = 0;

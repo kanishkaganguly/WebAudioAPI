@@ -29,11 +29,13 @@
 			<button class="buttons" id="playBtn">PLAY</button>
 			<button class="buttons" id="nextBtn">NEXT</button>
 			<button class="buttons" id="prevBtn">PREV</button>
+			<button class="buttons" id="muteBtn">MUTE</button>
 			<button class="buttons" id="clearBtn">CLEAR</button>
 			<input type="file" name="files[]"id="input" multiple accept="audio/*"> 
 		</div>
-		<br><br><br>
+		<div id="gap"></div>
 		<a id = "playlistToggle" class="playlist_toggle">PLAYLIST</a>
+		<div id="gap"></div>
 		<ul id = "play_list"> </ul>
 		<audio id = "audio" canplay = "song_loaded()" onloadeddata = "song_loaded()">
 			<source id = "mp3source" src = "" type="audio/mpeg" />
