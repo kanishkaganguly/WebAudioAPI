@@ -5,6 +5,19 @@
 		var playtime = document.getElementById("time");
 		var song_counter = 0;
 		var add_counter = 0;
+		var playBtn_DOM = document.getElementById("playBtn");
+		var nextBtn_DOM = document.getElementById("nextBtn");
+		var prevBtn_DOM = document.getElementById("prevBtn");
+		var muteBtn_DOM = document.getElementById("muteBtn");
+		var clearBtn_DOM = document.getElementById("clearBtn");
+
+		$( document ).ready(function() {
+			playBtn_DOM.disabled = true;
+			nextBtn_DOM.disabled = true;
+			prevBtn_DOM.disabled = true;
+			muteBtn_DOM.disabled = true;
+			clearBtn_DOM.disabled = true;
+		});
 
 		function song_loaded(){
 			("LOADED");
@@ -93,6 +106,12 @@
 			for(var i=1; i< (myLi.length);i++){
 				myLi[i].addEventListener('click', playlist_clicked, false);
 			}
+
+			playBtn_DOM.disabled = false;
+			nextBtn_DOM.disabled = false;
+			prevBtn_DOM.disabled = false;
+			muteBtn_DOM.disabled = false;
+			clearBtn_DOM.disabled = false;
 		});	
 
 
