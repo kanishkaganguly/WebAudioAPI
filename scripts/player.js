@@ -11,6 +11,7 @@
 		var muteBtn_DOM = document.getElementById("muteBtn");
 		var clearBtn_DOM = document.getElementById("clearBtn");
 		var shuffleBtn_DOM = document.getElementById("shuffleBtn");
+		var repeatBtn_DOM = document.getElementById("repeatBtn");
 
 		$( document ).ready(function() {
 			playBtn_DOM.disabled = true;
@@ -18,14 +19,16 @@
 			prevBtn_DOM.disabled = true;
 			muteBtn_DOM.disabled = true;
 			clearBtn_DOM.disabled = true;
-				$( "#dialog-message" ).dialog({
-					modal: true,
-					buttons: {
-						Ok: function() {
-							$( this ).dialog( "close" );
-						}
+			repeatBtn_DOM.disabled = true;
+			shuffleBtn_DOM.disabled = true;
+			$( "#dialog-message" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
 					}
-				});
+				}
+			});
 		});
 
 		function song_loaded(){
@@ -130,6 +133,8 @@
 			prevBtn_DOM.disabled = false;
 			muteBtn_DOM.disabled = false;
 			clearBtn_DOM.disabled = false;
+			repeatBtn_DOM.disabled = false;
+			shuffleBtn_DOM.disabled = false;
 		});	
 
 
@@ -179,110 +184,114 @@
 		});
 
 		function next_song(){
-			if(song_counter == playlist.length-1){
-				if(shuffleBtn_DOM.checked == true){
-					song_counter = randomInt(0, playlist.length-1);
-				}else if(shuffleBtn_DOM.checked == false){
-					song_counter = 0;
+			if(repeatBtn_DOM.checked == true){
+				song_counter;
+			}else if(shuffleBtn_DOM.checked == false){
+				if(song_counter == playlist.length-1){
+					if(shuffleBtn_DOM.checked == true){
+						song_counter = randomInt(0, playlist.length-1);
+					}else if(shuffleBtn_DOM.checked == false){
+						song_counter = 0;
+					}
+				}else{
+					if(repeatBtn_DOM.checked == true){
+						song_counter = randomInt(0, playlist.length-1);
+					}else if(shuffleBtn_DOM.checked == false){
+						song_counter++;
+					}
 				}
-			}else{
-				if(shuffleBtn_DOM.checked == true){
-					song_counter = randomInt(0, playlist.length-1);
-				}else if(shuffleBtn_DOM.checked == false){
-					song_counter++;
+			}
+				var audio = $("#audio");
+				var myLi = document.getElementById('play_list').getElementsByTagName('li');
+				for(var i=0; i< (myLi.length);i++){
+					myLi[i].style.background="none";
+					myLi[i].style.color="white";
+				}
+				$("li").eq(song_counter).css("background", "white");
+				$("li").eq(song_counter).css("color", "black");
+				$("li").eq(song_counter).get(0).scrollIntoView();
+				nowplaying.innerHTML = song_list[song_counter];
+				$("#mp3source").attr("src", playlist[song_counter]);
+				audio[0].pause();
+				audio[0].load();
+			}
+
+			function handleFileSelect(evt) {
+				var files = evt.target.files;
+				for(var i=0,f;f=files[i];i++){
+					var reader = new FileReader();
+					var playList = document.getElementById('play_list');
+					reader.onload = (function(theFile) {
+						return function(e) {
+							playlist[add_counter] = e.target.result;
+							song_list[add_counter] = theFile.name;
+							add_counter++;
+							var newLI = document.createElement("li");
+							newLI.id = add_counter;
+							var newContent = document.createTextNode(theFile.name);
+							newLI.appendChild(newContent);
+							playList.appendChild(newLI);
+						};
+					})(f);
+					reader.readAsDataURL(f);
 				}
 			}
-			var audio = $("#audio");
-			var myLi = document.getElementById('play_list').getElementsByTagName('li');
-			for(var i=0; i< (myLi.length);i++){
-				myLi[i].style.background="none";
-				myLi[i].style.color="white";
+
+			function setupSeek(){
+				document.getElementById("seekrangeinput").value = 0;
+				document.getElementById("seekrangeinput").min = 0;
+				document.getElementById("seekrangeinput").max = audioplayer.duration;
 			}
-			$("li").eq(song_counter).css("background", "white");
-			$("li").eq(song_counter).css("color", "black");
-			$("li").eq(song_counter).get(0).scrollIntoView();
-			nowplaying.innerHTML = song_list[song_counter];
-			$("#mp3source").attr("src", playlist[song_counter]);
-			audio[0].pause();
-			audio[0].load();
-		}
-		
-		function handleFileSelect(evt) {
-			var files = evt.target.files;
-			for(var i=0,f;f=files[i];i++){
-				var reader = new FileReader();
-				var playList = document.getElementById('play_list');
-				reader.onload = (function(theFile) {
-					return function(e) {
-						playlist[add_counter] = e.target.result;
-						song_list[add_counter] = theFile.name;
-						add_counter++;
-						var newLI = document.createElement("li");
-						newLI.id = add_counter;
-						var newContent = document.createTextNode(theFile.name);
-						newLI.appendChild(newContent);
-						playList.appendChild(newLI);
-					};
-				})(f);
-				reader.readAsDataURL(f);
-			}
-		}
 
-		function setupSeek(){
-			document.getElementById("seekrangeinput").value = 0;
-			document.getElementById("seekrangeinput").min = 0;
-			document.getElementById("seekrangeinput").max = audioplayer.duration;
-		}
+			document.getElementById('input').addEventListener('change', handleFileSelect, false);
+			document.getElementById("rangeinput").addEventListener('change',volchange,false);
+			document.getElementById("seekrangeinput").addEventListener('change',seekchange,false);
+			audioplayer.addEventListener('ended', next_song, false);
+			audioplayer.addEventListener('play', change_play, false);
 
-		document.getElementById('input').addEventListener('change', handleFileSelect, false);
-		document.getElementById("rangeinput").addEventListener('change',volchange,false);
-		document.getElementById("seekrangeinput").addEventListener('change',seekchange,false);
-		audioplayer.addEventListener('ended', next_song, false);
-		audioplayer.addEventListener('play', change_play, false);
+			audioplayer.addEventListener('timeupdate',function (){
+				var currentTime = audioplayer.currentTime;
+				var duration = audioplayer.duration;
+				var dsec= new Number();
+				var dmin= new Number();
+				var csec= new Number();
+				var cmin= new Number();
 
-		audioplayer.addEventListener('timeupdate',function (){
-			var currentTime = audioplayer.currentTime;
-			var duration = audioplayer.duration;
-			var dsec= new Number();
-			var dmin= new Number();
-			var csec= new Number();
-			var cmin= new Number();
+				dsec = Math.floor( duration );    
+				dmin = Math.floor( dsec / 60 );
+				dmin = dmin >= 10 ? dmin : '0' + dmin;    
+				dsec = Math.floor( dsec % 60 );
+				dsec = dsec >= 10 ? dsec : '0' + dsec;
 
-			dsec = Math.floor( duration );    
-			dmin = Math.floor( dsec / 60 );
-			dmin = dmin >= 10 ? dmin : '0' + dmin;    
-			dsec = Math.floor( dsec % 60 );
-			dsec = dsec >= 10 ? dsec : '0' + dsec;
+				csec = Math.floor( currentTime );    
+				cmin = Math.floor( csec / 60 );
+				cmin = cmin >= 10 ? cmin : '0' + cmin;    
+				csec = Math.floor( csec % 60 );
+				csec = csec >= 10 ? csec : '0' + csec;
 
-			csec = Math.floor( currentTime );    
-			cmin = Math.floor( csec / 60 );
-			cmin = cmin >= 10 ? cmin : '0' + cmin;    
-			csec = Math.floor( csec % 60 );
-			csec = csec >= 10 ? csec : '0' + csec;
-
-			time.innerHTML = "(" + (cmin + ":"+ csec) + " / " + (dmin + ":" + dsec) + ")";
-			document.getElementById("seekrangevalue").value = (cmin + ":"+ csec);
-			document.getElementById("seekrangeinput").value = audioplayer.currentTime;
-		});
-
-		$("#playlistToggle").click(function(){
-			$( "#play_list" ).slideToggle( "slow", function() {
+				time.innerHTML = "(" + (cmin + ":"+ csec) + " / " + (dmin + ":" + dsec) + ")";
+				document.getElementById("seekrangevalue").value = (cmin + ":"+ csec);
+				document.getElementById("seekrangeinput").value = audioplayer.currentTime;
 			});
-		});
 
-		function randomInt(min,max)
-		{
-			return Math.floor(Math.random()*(max-(min+1))+(min+1));
-		}
+			$("#playlistToggle").click(function(){
+				$( "#play_list" ).slideToggle( "slow", function() {
+				});
+			});
 
-
-		$(document).keypress(function(event){
-			var keycode = (event.keyCode ? event.keyCode : event.which);
-			if(keycode == '32'){
-				playBtn_DOM.click();
-			}else if(keycode == '97'){
-				prevBtn_DOM.click();
-			}else if(keycode == '100'){
-				nextBtn_DOM.click();
+			function randomInt(min,max)
+			{
+				return Math.floor(Math.random()*(max-(min+1))+(min+1));
 			}
-		});
+
+
+			$(document).keypress(function(event){
+				var keycode = (event.keyCode ? event.keyCode : event.which);
+				if(keycode == '32'){
+					playBtn_DOM.click();
+				}else if(keycode == '97'){
+					prevBtn_DOM.click();
+				}else if(keycode == '100'){
+					nextBtn_DOM.click();
+				}
+			});
