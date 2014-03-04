@@ -18,6 +18,14 @@
 			prevBtn_DOM.disabled = true;
 			muteBtn_DOM.disabled = true;
 			clearBtn_DOM.disabled = true;
+				$( "#dialog-message" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
 		});
 
 		function song_loaded(){
@@ -266,3 +274,15 @@
 		{
 			return Math.floor(Math.random()*(max-(min+1))+(min+1));
 		}
+
+
+		$(document).keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '32'){
+				playBtn_DOM.click();
+			}else if(keycode == '97'){
+				prevBtn_DOM.click();
+			}else if(keycode == '100'){
+				nextBtn_DOM.click();
+			}
+		});

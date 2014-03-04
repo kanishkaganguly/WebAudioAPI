@@ -1,29 +1,39 @@
-<html>
+<!doctype html>
+<html lang="us">
 <head>
-	<script src = "scripts/jquery-1.9.0.js"></script>
+	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
+	<link href="styles/css/dark-hive/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<script src="scripts/jquery-1.10.2.js"></script>
+	<script src="scripts/jquery-ui-1.10.4.custom.js"></script>
 </head>
 
 <body>
+	<div id="dialog-message" title="Keyboard Shortcuts">
+		<p>Use The Following Keyboard Keys To Control Player</p>
+		<p>(Space = Toggle Play)</p>
+		<p>(D = Next Song)</p>
+		<p>(A = Previous Song)</p>
+	</div>
 	<br><br><br><br>
 	<center>
 		<h2>HTML5 Offline Music Player</h2>
 		<center><span id = "playing"><b>Now Playing</b>    </span></center>
 		<center>Duration <span id = "time"></span></center>
 		<div id="gap"></div>
-			<div id="slider">
-				<input class="bar" type="range" id="rangeinput" min = "0" max = "100" value="50"/>
-				<span class ="highlight"></span>
-				<output id="rangevalue">50</output>
-			</div>
-			<div id="gap"></div>
+		<div id="slider">
+			<input class="bar" type="range" id="rangeinput" min = "0" max = "100" value="50"/>
+			<span class ="highlight"></span>
+			<output id="rangevalue">50</output>
+		</div>
+		<div id="gap"></div>
 
-			<div id="seekslider">
-				<input class="seekbar" type="range" id="seekrangeinput" min = "0" max = "100" value="0"/>
-				<span class ="seekhighlight"></span>
-				<output id="seekrangevalue">0</output>
-			</div>
-			<div id="gap"></div>
+		<div id="seekslider">
+			<input class="seekbar" type="range" id="seekrangeinput" min = "0" max = "100" value="0"/>
+			<span class ="seekhighlight"></span>
+			<output id="seekrangevalue">0</output>
+		</div>
+		<div id="gap"></div>
 		<div class="buttongroup">
 			<button class="buttons" id="startBtn">UPDATE PLAYLIST</button>
 			<button class="buttons" id="playBtn">PLAY</button>
@@ -43,6 +53,6 @@
 			Your browser does not support HTML5 audio. Please consider upgrading.
 		</audio>
 		<script src = "scripts/player.js"></script>
-</body>
-</html>
+	</body>
+	</html>
 
