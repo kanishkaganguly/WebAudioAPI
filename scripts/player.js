@@ -186,7 +186,7 @@
 		function next_song(){
 			if(repeatBtn_DOM.checked == true){
 				song_counter;
-			}else if(shuffleBtn_DOM.checked == false){
+			}else if(repeatBtn_DOM.checked == false){
 				if(song_counter == playlist.length-1){
 					if(shuffleBtn_DOM.checked == true){
 						song_counter = randomInt(0, playlist.length-1);
@@ -194,7 +194,7 @@
 						song_counter = 0;
 					}
 				}else{
-					if(repeatBtn_DOM.checked == true){
+					if(shuffleBtn_DOM.checked == true){
 						song_counter = randomInt(0, playlist.length-1);
 					}else if(shuffleBtn_DOM.checked == false){
 						song_counter++;
