@@ -251,6 +251,7 @@
 
 
 		$(window).bind('mousewheel', function(e) {
+			if($(e.target).closest('ul').length) return;
 			if(e.originalEvent.wheelDelta / 120 > 0) {
 				if((audioplayer.volume + 1/100) > 1){
 					audioplayer.volume = 1;
