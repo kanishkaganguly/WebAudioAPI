@@ -251,24 +251,22 @@
 
 
 		$(window).bind('mousewheel', function(e) {
-			if(e.originalEvent.wheelDelta / 20 > 0) {
-				var audio = $("#audio");
-				if(audioplayer.volume == 1){
-					audioplayer.volume;	
+			if(e.originalEvent.wheelDelta / 120 > 0) {
+				if((audioplayer.volume + 1/100) > 1){
+					audioplayer.volume = 1;
 				}else{
-					audioplayer.volume += 2/100;
-					document.getElementById('rangeinput').value = (audioplayer.volume * 100);
-					document.getElementById("rangevalue").value = document.getElementById('rangeinput').value;
-				}			
-			} else {
-				var audio = $("#audio");
-				if(audioplayer.volume == 0){
-					audioplayer.volume;	
-				}else{
-					audioplayer.volume -= 2/100;
-					document.getElementById('rangeinput').value = (audioplayer.volume * 100);
-					document.getElementById("rangevalue").value = document.getElementById('rangeinput').value;
+					audioplayer.volume += 1/100;
 				}
+				document.getElementById('rangeinput').value = (audioplayer.volume * 100);
+				document.getElementById("rangevalue").value = document.getElementById('rangeinput').value;
+			} else {
+				if((audioplayer.volume - 1/100) < 0){
+					audioplayer.volume = 0;
+				}else{
+					audioplayer.volume -= 1/100;
+				}
+				document.getElementById('rangeinput').value = (audioplayer.volume * 100);
+				document.getElementById("rangevalue").value = document.getElementById('rangeinput').value;
 			}
 		});
 
