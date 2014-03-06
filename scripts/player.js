@@ -13,7 +13,7 @@
 		var shuffleBtn_DOM = document.getElementById("shuffleBtn");
 		var repeatBtn_DOM = document.getElementById("repeatBtn");
 		var seconds = 0;
-		var counter;
+		var counter, position = 0;
 
 		$( document ).ready(function() {
 			playBtn_DOM.disabled = true;
@@ -36,7 +36,7 @@
 		function song_loaded(){
 			("LOADED");
 			setupSeek();
-			document.title=song_list[song_counter];
+			scrolltitle();
 			audioplayer.play();
 		}
 
@@ -61,6 +61,7 @@
 			document.getElementById('play_list').innerHTML = '';
 			nowplaying.innerHTML = '';
 			input.replaceWith(input.val('').clone(true));
+			add_counter = 0;
 		});	
 
 		$("#nextBtn").click(function(){
@@ -163,8 +164,6 @@
 			repeatBtn_DOM.disabled = false;
 			shuffleBtn_DOM.disabled = false;
 		});	
-
-
 
 		function playlist_clicked(evt){
 			song_counter = (evt.target.id - 1);
@@ -344,3 +343,10 @@
 				nextBtn_DOM.click();
 			}
 		});
+
+		function scrolltitle() {
+			document.title = (song_list[song_counter]+" ").substring(position, (song_list[song_counter]+" ").length) + (song_list[song_counter]+" ").substring(0, position); 
+			position++;
+			if (position > (song_list[song_counter]+" ").length) position = 0
+				window.setTimeout("scrolltitle()",170);
+		}
