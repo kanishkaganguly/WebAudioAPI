@@ -12,6 +12,8 @@
 		var clearBtn_DOM = document.getElementById("clearBtn");
 		var shuffleBtn_DOM = document.getElementById("shuffleBtn");
 		var repeatBtn_DOM = document.getElementById("repeatBtn");
+		var seconds = 0;
+		var counter;
 
 		$( document ).ready(function() {
 			playBtn_DOM.disabled = true;
@@ -34,6 +36,7 @@
 		function song_loaded(){
 			("LOADED");
 			setupSeek();
+			document.title=song_list[song_counter];
 			audioplayer.play();
 		}
 
@@ -109,6 +112,30 @@
 			audio[0].pause();
 			audio[0].load();
 		});	
+
+		$("#timerBtn").click(function(){
+			seconds = document.getElementById("timerVal").value;
+			document.getElementById("timerProgress").max = seconds;
+			counter = setInterval(Decrement, 1000);
+		});	
+
+		$("#stopTimerBtn").click(function(){
+			clearInterval(counter);
+			$('#timerProgress').val(0);
+		});	
+
+		function Decrement(){
+			seconds -= 1;
+			if(seconds == 0){
+				$('#timerProgress').val(0);
+				clearInterval(counter);
+				var objWindow = window.open(location.href, "_self");
+				objWindow.close();
+				return;
+			}
+			$('#timerProgress').val(seconds);
+			document.getElementById('timerProgress').setAttribute("data-content", seconds + " sec(s)");
+		}
 
 		$("#startBtn").click(function(){
 			var h = $(window).height() - $("#play_list").offset().top;

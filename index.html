@@ -6,6 +6,7 @@
 	<link href="styles/css/dark-hive/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 	<script src="scripts/jquery-1.10.2.js"></script>
 	<script src="scripts/jquery-ui-1.10.4.custom.js"></script>
+	<title>HTML5 Audio Player</title>
 </head>
 
 <body>
@@ -35,6 +36,11 @@
 			<span class ="seekhighlight"></span>
 			<output id="seekrangevalue">0</output>
 		</div>
+		<div id="gap"></div>
+		Shutdown After <progress value="22" id = "timerProgress" data-content="Secs Left"></progress>
+		<input type="number" id="timerVal">Seconds
+		<button class="buttons" id="timerBtn">START TIMER</button>
+		<button class="buttons" id="stopTimerBtn">STOP TIMER</button>
 		<div id="gap"></div>
 		<div class="buttongroup">
 			<button class="buttons" id="startBtn">UPDATE PLAYLIST</button>

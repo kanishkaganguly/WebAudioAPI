@@ -316,3 +316,14 @@ ul li{
 #gap{
 	padding:10px;
 }
+
+#timerVal{
+	width: 40px;
+	margin-left: 30px;
+}
+
+progress:before {
+    content: attr(data-content);
+    color :black;
+    
+}
