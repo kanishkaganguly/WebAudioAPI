@@ -94,12 +94,16 @@
 		});	
 
 		$("#prevBtn").click(function(){
-			if(song_counter == 0){
-				song_counter = playlist.length-1;
-			}else{
-				song_counter--;
-			}
 			var audio = $("#audio");
+			if(audioplayer.currentTime > 5){
+				song_counter;
+			}else if(audioplayer.currentTime < 5){
+				if(song_counter == 0){
+					song_counter = playlist.length-1;
+				}else{
+					song_counter--;
+				}
+			}
 			nowplaying.innerHTML = song_list[song_counter];
 			var myLi = document.getElementById('play_list').getElementsByTagName('li');
 			for(var i=0; i< (myLi.length);i++){
@@ -210,18 +214,25 @@
 		});
 
 		function next_song(){
+			var old_counter = song_counter;
 			if(repeatBtn_DOM.checked == true){
 				song_counter;
 			}else if(repeatBtn_DOM.checked == false){
 				if(song_counter == playlist.length-1){
 					if(shuffleBtn_DOM.checked == true){
 						song_counter = randomInt(0, playlist.length-1);
+						if(old_counter == song_counter){
+							song_counter = randomInt(0, playlist.length-1);
+						}
 					}else if(shuffleBtn_DOM.checked == false){
 						song_counter = 0;
 					}
 				}else{
 					if(shuffleBtn_DOM.checked == true){
 						song_counter = randomInt(0, playlist.length-1);
+						if(old_counter == song_counter){
+							song_counter = randomInt(0, playlist.length-1);
+						}
 					}else if(shuffleBtn_DOM.checked == false){
 						song_counter++;
 					}
@@ -336,10 +347,13 @@
 		$(document).keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			if(keycode == '32'){
+				event.preventDefault();
 				playBtn_DOM.click();
 			}else if(keycode == '97'){
+				event.preventDefault();
 				prevBtn_DOM.click();
 			}else if(keycode == '100'){
+				event.preventDefault();
 				nextBtn_DOM.click();
 			}
 		});
