@@ -343,7 +343,6 @@
 			return Math.floor(Math.random()*(max-(min+1))+(min+1));
 		}
 
-
 		$(document).keypress(function(event){
 			var keycode = (event.keyCode ? event.keyCode : event.which);
 			if(keycode == '32'){
@@ -356,6 +355,10 @@
 				event.preventDefault();
 				nextBtn_DOM.click();
 			}
+		});
+
+		$(document).mousemove(function(event){
+			if (document.activeElement != document.body) document.activeElement.blur();
 		});
 
 		function scrolltitle() {
