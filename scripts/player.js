@@ -37,13 +37,13 @@
 			setupSeek();
 			scrolltitle();
 			audioplayer.play();
-			$('#audio').fadeaudio({
+			/*$('#audio').fadeaudio({
 				'fade_in_start' : 0, // Where to start the fade in (in seconds)
 				'fade_in_interval' : 200, // How often to repeat the increase in volume (in milliseconds)
-				'fade_out_start' : (audioplayer.duration - 10),   // Where to start the fade out (in seconds)
+				'fade_out_start' : (audioplayer.duration - 15),   // Where to start the fade out (in seconds)
 				'fade_out_interval' : 200, // How often to repeat the decrease in volume (in milliseconds)
 				'step' : 0.02 // Units by which to change volume, where 1 = 100 percent.
-			})
+			})*/
 		}
 
 		function volchange() {
